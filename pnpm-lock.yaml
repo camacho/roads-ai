@@ -47,20 +47,20 @@ importers:
         specifier: ^2.1.9
         version: 2.1.10
       markdown-magic:
-        specifier: ^4.8.0
+        specifier: 4.11.0
         version: 4.11.0
       markdown-magic-engines:
         specifier: 2.1.0
         version: 2.1.0(markdown-magic@4.11.0)
-      markdown-magic-install-command:
-        specifier: 3.0.0
-        version: 3.0.0(markdown-magic@4.11.0)
       markdown-magic-package-scripts:
         specifier: 2.1.0
         version: 2.1.0(markdown-magic@4.11.0)
       markdown-magic-prettier:
         specifier: 3.1.0
         version: 3.1.0(markdown-magic@4.11.0)(prettier@3.9.5)
+      markdown-magic-subpackage-list:
+        specifier: 2.1.0
+        version: 2.1.0(markdown-magic@4.11.0)
       prettier:
         specifier: ^3.8.3
         version: 3.9.5
@@ -2237,15 +2237,6 @@ packages:
     peerDependencies:
       markdown-magic: ^4
 
-  markdown-magic-install-command@3.0.0:
-    resolution:
-      {
-        integrity: sha512-Z7nV3VOFr+GVu4H7FSO7OY16RS1HcXUxt4O5V80QN/xl+p/5T6ZNiNC0Wp0Ayii3pu+QRjbcr+pL3CPwi43K9g==,
-      }
-    engines: { node: '>=22.18.0' }
-    peerDependencies:
-      markdown-magic: ^4
-
   markdown-magic-package-scripts@2.1.0:
     resolution:
       {
@@ -2264,6 +2255,15 @@ packages:
     peerDependencies:
       markdown-magic: ^4
       prettier: ^3
+
+  markdown-magic-subpackage-list@2.1.0:
+    resolution:
+      {
+        integrity: sha512-8r61p9QDV56lGbb5wVIEkTTvznizP1Ml4YmpAJfx1LlLRdUZBTUmhvzK9N2A9sCgbMO9mMdnxCJIOSj8qch1kg==,
+      }
+    engines: { node: '>=22.18.0' }
+    peerDependencies:
+      markdown-magic: ^4
 
   markdown-magic@4.11.0:
     resolution:
@@ -4384,11 +4384,6 @@ snapshots:
       find-up: 8.0.0
       markdown-magic: 4.11.0
 
-  markdown-magic-install-command@3.0.0(markdown-magic@4.11.0):
-    dependencies:
-      find-up: 8.0.0
-      markdown-magic: 4.11.0
-
   markdown-magic-package-scripts@2.1.0(markdown-magic@4.11.0):
     dependencies:
       find-up: 8.0.0
@@ -4399,6 +4394,10 @@ snapshots:
     dependencies:
       markdown-magic: 4.11.0
       prettier: 3.9.5
+
+  markdown-magic-subpackage-list@2.1.0(markdown-magic@4.11.0):
+    dependencies:
+      markdown-magic: 4.11.0
 
   markdown-magic@4.11.0:
     dependencies:

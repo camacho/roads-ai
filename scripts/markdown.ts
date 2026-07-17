@@ -1,121 +1,112 @@
 #!/usr/bin/env -S node --experimental-strip-types
 
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
-import { basename, extname, join, resolve } from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { basename, relative, resolve } from 'node:path';
 
+import { markdownMagic } from 'markdown-magic';
 import ENGINES from 'markdown-magic-engines';
-import INSTALL from 'markdown-magic-install-command';
 import PRETTIER from 'markdown-magic-prettier';
 import SCRIPTS from 'markdown-magic-package-scripts';
-
-const require = createRequire(import.meta.url);
-const { markdownMagic } = require('markdown-magic');
+import SUBPACKAGELIST from 'markdown-magic-subpackage-list';
+import prettier from 'prettier';
 
 const root = resolve(import.meta.dirname, '..');
-const docsDir = join(root, 'docs');
-const generatedMarkdownFiles = [
-  join(root, 'README.md'),
-  ...findMarkdownFiles(docsDir),
-];
-const formattedMarkdownFiles = [...generatedMarkdownFiles];
+const markdownGlobs = ['README.md', 'docs/**/*.md'];
 
-function findMarkdownFiles(dir: string): string[] {
-  let entries: string[];
-
-  try {
-    entries = readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-      const path = join(dir, entry.name);
-
-      if (entry.isDirectory()) {
-        return findMarkdownFiles(path);
-      }
-
-      return extname(entry.name) === '.md' ? [path] : [];
-    });
-  } catch {
-    return [];
-  }
-
-  return entries.sort();
-}
-
-async function workspacePackages(): Promise<string> {
-  const packageDirs = readdirSync(join(root, 'packages'), {
-    withFileTypes: true,
-  })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort();
-
-  const rows = packageDirs.map((name) => {
-    const manifest = JSON.parse(
-      readFileSync(join(root, 'packages', name, 'package.json'), 'utf8'),
-    );
-
-    return `- \`${manifest.name}\`: ${manifest.description}`;
-  });
-
-  return rows.join('\n');
-}
+type MarkdownResult = {
+  outputPath?: string;
+};
 
 const config = {
   matchWord: 'AUTO-GENERATED-CONTENT',
+  cwd: root,
   transforms: {
     ENGINES,
-    INSTALL,
     PRETTIER,
     SCRIPTS,
-    WORKSPACE_PACKAGES: workspacePackages,
+    SUBPACKAGELIST,
   },
 };
 
-export async function run() {
-  const isCheck = process.argv.includes('--check');
-  const originalContents = new Map(
-    generatedMarkdownFiles.map((file) => [file, readFileSync(file, 'utf8')]),
-  );
+function getOutputPaths(results: MarkdownResult[]): string[] {
+  return results
+    .map((result) => result.outputPath)
+    .filter((path): path is string => typeof path === 'string')
+    .sort();
+}
 
-  for (const file of generatedMarkdownFiles) {
-    await markdownMagic(file, {
-      ...config,
-      dry: false,
-      silent: true,
-    });
+async function formatMarkdown(contents: string, file: string): Promise<string> {
+  const options = (await prettier.resolveConfig(file)) ?? {};
+  return prettier.format(contents, {
+    ...options,
+    filepath: file,
+  });
+}
+
+async function formatGeneratedFiles(files: string[]): Promise<void> {
+  for (const file of files) {
+    const contents = readFileSync(file, 'utf8');
+    const formatted = await formatMarkdown(contents, file);
+
+    if (formatted !== contents) {
+      writeFileSync(file, formatted, 'utf8');
+    }
   }
+}
 
-  execFileSync(
-    'pnpm',
-    ['exec', 'prettier', '--write', ...formattedMarkdownFiles],
-    {
-      cwd: root,
-      stdio: 'inherit',
-    },
+export async function run(argv: string[] = process.argv.slice(2)) {
+  const isCheck = argv.includes('--check');
+  const dryRun = await markdownMagic(markdownGlobs, {
+    ...config,
+    dry: true,
+    silent: true,
+  });
+  const files = getOutputPaths(dryRun.results as MarkdownResult[]);
+  const originalContents = new Map(
+    files.map((file) => [file, readFileSync(file, 'utf8')]),
   );
+
+  const generated = await markdownMagic(markdownGlobs, {
+    ...config,
+    silent: true,
+  });
+  const generatedFiles = getOutputPaths(generated.results as MarkdownResult[]);
+  await formatGeneratedFiles(generatedFiles);
 
   if (!isCheck) {
     return;
   }
 
-  const staleFiles = generatedMarkdownFiles.filter(
-    (file) => originalContents.get(file) !== readFileSync(file, 'utf8'),
-  );
+  const staleFiles: string[] = [];
 
-  for (const file of staleFiles) {
-    writeFileSync(file, originalContents.get(file) ?? '', 'utf8');
+  for (const file of generatedFiles) {
+    const original = originalContents.get(file) ?? '';
+    const current = readFileSync(file, 'utf8');
+
+    if (
+      (await formatMarkdown(original, file)) !==
+      (await formatMarkdown(current, file))
+    ) {
+      staleFiles.push(file);
+      writeFileSync(file, original, 'utf8');
+    }
   }
 
   if (staleFiles.length > 0) {
     console.error(
       '[docs:check] Generated markdown is out of sync.\n' +
-        'Run `pnpm run docs` to regenerate, then commit.',
+        'Run `pnpm docs` to regenerate, then commit.',
+    );
+    console.error(
+      `[docs:check] Stale files: ${staleFiles
+        .map((file) => relative(root, file))
+        .join(', ')}`,
     );
     process.exit(1);
   }
 
   console.log(
-    `[docs:check] Generated markdown is in sync for ${generatedMarkdownFiles
+    `[docs:check] Generated markdown is in sync for ${generatedFiles
       .map((file) => basename(file))
       .join(', ')}.`,
   );

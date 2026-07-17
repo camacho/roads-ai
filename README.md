@@ -10,10 +10,10 @@ The current scaffold keeps the package behavior intentionally small. Both worksp
 
 ## Packages
 
-<!-- AUTO-GENERATED-CONTENT:START (WORKSPACE_PACKAGES) -->
+<!-- AUTO-GENERATED-CONTENT:START (SUBPACKAGELIST:verbose=true) -->
 
-- `@roads-ai/harness`: Roads AI harness executable scaffold
-- `@roads-ai/model`: Roads AI model executable scaffold
+- [@roads-ai/harness](packages/harness) - Roads AI harness executable scaffold
+- [@roads-ai/model](packages/model) - Roads AI model executable scaffold
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 

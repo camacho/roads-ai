@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     format:
-      glob: '*.{js,ts,json,md,yml,yaml}'
+      glob: '*.{js,ts,md,yml,yaml}'
       run: pnpm prettier --write {staged_files}
       stage_fixed: true
     format-package:
