@@ -18,11 +18,18 @@ type MarkdownResult = {
   outputPath?: string;
 };
 
+type MarkdownMagicError = {
+  errorMessage?: string;
+  errors?: Array<{
+    message?: string;
+  }>;
+};
+
 type MarkdownMagic = (
   globOrOpts?: string | string[] | Record<string, unknown>,
   options?: Record<string, unknown>,
 ) => Promise<{
-  errors: unknown[];
+  errors: MarkdownMagicError[];
   filesChanged: string[];
   results: unknown[];
 }>;
@@ -66,6 +73,27 @@ async function formatGeneratedFiles(files: string[]): Promise<void> {
   }
 }
 
+function assertNoMarkdownErrors(
+  phase: 'dry run' | 'generation',
+  errors: MarkdownMagicError[],
+): void {
+  if (errors.length === 0) {
+    return;
+  }
+
+  const details = errors
+    .flatMap((error) => [
+      error.errorMessage,
+      ...(error.errors ?? []).map((entry) => entry.message),
+    ])
+    .filter((message): message is string => Boolean(message))
+    .join('\n');
+
+  throw new Error(
+    `[docs] markdown-magic ${phase} failed.${details ? `\n${details}` : ''}`,
+  );
+}
+
 export async function run(argv: string[] = process.argv.slice(2)) {
   const isCheck = argv.includes('--check');
   const dryRun = await markdownMagic(markdownGlobs, {
@@ -73,6 +101,7 @@ export async function run(argv: string[] = process.argv.slice(2)) {
     dry: true,
     silent: true,
   });
+  assertNoMarkdownErrors('dry run', dryRun.errors);
   const files = getOutputPaths(dryRun.results as MarkdownResult[]);
   const originalContents = new Map(
     files.map((file) => [file, readFileSync(file, 'utf8')]),
@@ -82,6 +111,7 @@ export async function run(argv: string[] = process.argv.slice(2)) {
     ...config,
     silent: true,
   });
+  assertNoMarkdownErrors('generation', generated.errors);
   const generatedFiles = getOutputPaths(generated.results as MarkdownResult[]);
   await formatGeneratedFiles(generatedFiles);
 
