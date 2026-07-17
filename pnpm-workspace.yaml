@@ -1,0 +1,9 @@
+packages:
+  - packages/*
+
+minimumReleaseAge: 10080
+
+catalog:
+  markdown-magic: ^4.0.0
+  prettier: ^3.6.2
+  vitest: ^4.0.0

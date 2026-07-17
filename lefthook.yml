@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{js,ts,json,md,yml,yaml}'
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+    typecheck:
+      glob: '*.{js,ts}'
+      run: pnpm typecheck
+    test:
+      glob: 'packages/*/**/*'
+      run: pnpm -r --filter='...[HEAD]' test
