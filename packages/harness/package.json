@@ -1,0 +1,36 @@
+{
+  "name": "@roads-ai/harness",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Teaching-oriented local harness stub for roads-ai",
+  "type": "module",
+  "main": "index.ts",
+  "types": "types.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc --project tsconfig.build.json",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "harness",
+    "teaching",
+    "local",
+    "model"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@roads-ai/model": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "typescript": "^6.0.3",
+    "vitest": "catalog:"
+  }
+}
