@@ -1,9 +1,9 @@
 #!/usr/bin/env -S node --experimental-strip-types
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { basename, relative, resolve } from 'node:path';
 
-import { markdownMagic } from 'markdown-magic';
 import ENGINES from 'markdown-magic-engines';
 import PRETTIER from 'markdown-magic-prettier';
 import SCRIPTS from 'markdown-magic-package-scripts';
@@ -12,10 +12,22 @@ import prettier from 'prettier';
 
 const root = resolve(import.meta.dirname, '..');
 const markdownGlobs = ['README.md', 'docs/**/*.md'];
+const require = createRequire(import.meta.url);
 
 type MarkdownResult = {
   outputPath?: string;
 };
+
+type MarkdownMagic = (
+  globOrOpts?: string | string[] | Record<string, unknown>,
+  options?: Record<string, unknown>,
+) => Promise<{
+  errors: unknown[];
+  filesChanged: string[];
+  results: unknown[];
+}>;
+
+const markdownMagic = require('markdown-magic').markdownMagic as MarkdownMagic;
 
 const config = {
   matchWord: 'AUTO-GENERATED-CONTENT',

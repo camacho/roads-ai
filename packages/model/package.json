@@ -24,7 +24,6 @@
     "dist"
   ],
   "scripts": {
-    "prebuild": "rm -rf dist",
     "build": "tsc --project tsconfig.build.json",
     "postbuild": "chmod +x dist/index.js",
     "test": "vitest run"
