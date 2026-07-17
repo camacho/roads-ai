@@ -1,9 +1,5 @@
 # @roads-ai/model
 
-Local model adapter contract for the `roads-ai` workspace.
+Roads AI model scaffold.
 
-This package is intentionally small. It defines:
-
-- how the harness talks to a local model endpoint
-- the default assumption that model traffic stays on loopback
-- a stub client for tests and RFC-driven exploration
+Exports an async default `run` stub and can execute directly as a script.

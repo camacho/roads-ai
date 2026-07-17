@@ -1,31 +1,24 @@
+import { execFile } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
-import { createLocalModelConfig, createStubLocalModelClient } from './index.ts';
+import run from './index.ts';
+
+const execFileAsync = promisify(execFile);
 
 describe('@roads-ai/model', () => {
-  it('defaults to a loopback endpoint for local hosting', () => {
-    expect(createLocalModelConfig({ model: 'llama3.1' })).toMatchObject({
-      endpoint: 'http://127.0.0.1:11434',
-      model: 'llama3.1',
-      transport: 'http',
-    });
+  it('exports an async run stub', async () => {
+    await expect(run()).resolves.toBe('run model');
   });
 
-  it('allows deterministic stubbing for harness tests', async () => {
-    const client = createStubLocalModelClient(
-      createLocalModelConfig({ model: 'llama3.1' }),
-      () => ({
-        content: 'Ask the learner to trace the loop on paper.',
-        rawModelId: 'llama3.1',
-      }),
-    );
+  it('runs automatically when called as a script', async () => {
+    const scriptPath = fileURLToPath(new URL('./index.ts', import.meta.url));
 
-    await expect(
-      client.complete({
-        system: 'teach, do not solve',
-        user: 'write a for loop',
-      }),
-    ).resolves.toMatchObject({
-      rawModelId: 'llama3.1',
-    });
+    const { stdout } = await execFileAsync('node', [
+      '--experimental-strip-types',
+      scriptPath,
+    ]);
+
+    expect(stdout).toBe('run model\n');
   });
 });

@@ -1,64 +1,24 @@
-import type { CompletionRequest } from '@roads-ai/model';
+import { execFile } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
-import {
-  createLocalModelConfig,
-  createStubLocalModelClient,
-} from '@roads-ai/model';
-import {
-  assertLocalOnlyModel,
-  buildPromptEnvelope,
-  createTeachingHarness,
-} from './index.ts';
+import run from './index.ts';
+
+const execFileAsync = promisify(execFile);
 
 describe('@roads-ai/harness', () => {
-  it('bakes non-solution policy into the system prompt', () => {
-    const envelope = buildPromptEnvelope(
-      {
-        task: 'Write a function that reverses a linked list.',
-        language: 'TypeScript',
-      },
-      {
-        allowedMoves: ['show a smaller example'],
-        forbiddenMoves: ['provide the final answer'],
-        requiresExamples: true,
-        requiresExplanations: true,
-      },
-    );
-
-    expect(envelope.system).toContain('Never provide the final answer');
-    expect(envelope.system).toContain('show a smaller example');
+  it('exports an async run stub', async () => {
+    await expect(run()).resolves.toBe('run harness');
   });
 
-  it('routes prompt envelopes through the local model client', async () => {
-    const model = createStubLocalModelClient(
-      createLocalModelConfig({ model: 'qwen2.5-coder' }),
-      ({ system, user }: CompletionRequest) => ({
-        content: `${system}\n---\n${user}`,
-        rawModelId: 'qwen2.5-coder',
-      }),
-    );
+  it('runs automatically when called as a script', async () => {
+    const scriptPath = fileURLToPath(new URL('./index.ts', import.meta.url));
 
-    const harness = createTeachingHarness({ model });
-    const draft = await harness.draft({
-      task: 'Explain recursion using factorial as an example.',
-    });
+    const { stdout } = await execFileAsync('node', [
+      '--experimental-strip-types',
+      scriptPath,
+    ]);
 
-    expect(draft).toContain('programming tutor');
-    expect(draft).toContain('Explain recursion');
-  });
-
-  it('rejects non-loopback endpoints', () => {
-    const model = createStubLocalModelClient(
-      createLocalModelConfig({
-        model: 'qwen2.5-coder',
-        endpoint: 'http://192.168.1.10:11434',
-      }),
-      () => ({
-        content: 'Use an analogy instead of a solution.',
-        rawModelId: 'qwen2.5-coder',
-      }),
-    );
-
-    expect(() => assertLocalOnlyModel(model)).toThrow(/loopback-only/);
+    expect(stdout).toBe('run harness\n');
   });
 });

@@ -1,9 +1,5 @@
 # @roads-ai/harness
 
-Teaching-oriented harness stub for the `roads-ai` workspace.
+Roads AI harness scaffold.
 
-This package currently focuses on:
-
-- defining a tutor-style policy surface
-- wrapping learner turns into prompt envelopes
-- enforcing a local-only connection assumption to the model adapter
+Exports an async default `run` stub and can execute directly as a script.

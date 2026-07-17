@@ -1,22 +1,11 @@
 {
   "name": "@roads-ai/harness",
-  "private": true,
   "version": "0.0.0",
-  "description": "Teaching-oriented local harness stub for roads-ai",
-  "type": "module",
-  "main": "index.ts",
-  "types": "types.ts",
-  "exports": {
-    ".": "./index.ts",
-    "./package.json": "./package.json"
-  },
+  "description": "Roads AI harness executable scaffold",
+  "license": "UNLICENSED",
+  "private": true,
   "engines": {
     "node": ">=24.0.0"
-  },
-  "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "tsc --project tsconfig.build.json",
-    "test": "vitest run"
   },
   "keywords": [
     "harness",
@@ -24,10 +13,23 @@
     "local",
     "model"
   ],
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@roads-ai/model": "workspace:*"
+  "bin": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc --project tsconfig.build.json",
+    "postbuild": "chmod +x dist/index.js",
+    "test": "vitest run"
+  },
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^24.13.2",
     "typescript": "^6.0.3",

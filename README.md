@@ -1,19 +1,19 @@
 # roads-ai
 
-Local-first workspace for an educational programming helper built from:
+Roads AI is a local-first scaffold for an educational programming system built from:
 
-- an open-source model hosted on the learner's machine
-- an open-source harness constrained to examples and explanations
-- a policy layer designed to avoid direct answer delivery
+- an open-source model hosted behind a local server
+- an open-source harness installed on a local device
+- a minimal TypeScript monorepo intended to evolve through the RFC in [docs/rfc-001.md](./docs/rfc-001.md)
 
-The initial scaffold is intentionally infrastructure-heavy and product-light. It gives the repo a stable shape for package boundaries, docs generation, CI, and tests while the core behavior is still being designed in [docs/rfc-001.md](./docs/rfc-001.md).
+The current scaffold keeps the package behavior intentionally small. Both workspace packages expose an async `run` stub and can execute directly as scripts after build output is made executable.
 
 ## Packages
 
 <!-- AUTO-GENERATED-CONTENT:START (WORKSPACE_PACKAGES) -->
 
-- `@roads-ai/harness`: Teaching-oriented local harness stub for roads-ai
-- `@roads-ai/model`: Local-only model adapter contract for roads-ai
+- `@roads-ai/harness`: Roads AI harness executable scaffold
+- `@roads-ai/model`: Roads AI model executable scaffold
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
@@ -28,18 +28,15 @@ pnpm typecheck
 pnpm run docs
 ```
 
-## Architecture Sketch
+## Current Scope
 
 ```mermaid
 flowchart LR
-  Learner --> Harness[Constrained Harness]
-  Harness --> Policy[Teaching Policy]
-  Policy --> Adapter[Local Model Adapter]
-  Adapter --> Model[Local Model Runtime]
+  Device[Local Device] --> Harness[Harness Stub]
+  Harness --> Server[Local Server]
+  Server --> Model[Model Stub]
 ```
 
-## Current Scope
-
-- `packages/harness`: policy-aware orchestration stub
-- `packages/model`: local model adapter stub
-- `docs/rfc-001.md`: RFC outline for safety, architecture, and rollout decisions
+- `packages/harness`: executable harness stub with an async `run`
+- `packages/model`: executable model stub with an async `run`
+- `docs/rfc-001.md`: RFC outline for the real harness/model design

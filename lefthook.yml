@@ -5,6 +5,10 @@ pre-commit:
       glob: '*.{js,ts,json,md,yml,yaml}'
       run: pnpm prettier --write {staged_files}
       stage_fixed: true
+    format-package:
+      glob: '**/package.json'
+      run: pnpm exec format-package --write {staged_files}
+      stage_fixed: true
     typecheck:
       glob: '*.{js,ts}'
       run: pnpm typecheck

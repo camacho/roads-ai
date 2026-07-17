@@ -1,24 +1,30 @@
 {
   "name": "roads-ai",
-  "private": true,
   "description": "Local-only teaching harness workspace for constrained model assistance",
   "license": "UNLICENSED",
-  "type": "module",
+  "private": true,
   "engines": {
     "node": ">=24.0.0"
   },
-  "packageManager": "pnpm@10.32.1",
+  "type": "module",
   "scripts": {
     "build": "pnpm -r build",
+    "ci:release": "pnpm validate && changeset tag && git push --follow-tags",
+    "docs": "node --experimental-strip-types scripts/markdown.ts",
+    "docs:check": "node --experimental-strip-types scripts/markdown.ts --check",
+    "format": "prettier --write . && format-package --write",
+    "format:check": "prettier --check . && format-package --check",
     "lint": "eslint .",
+    "prepare": "lefthook install",
     "test": "pnpm -r test",
     "typecheck": "tsc --noEmit",
-    "docs": "node scripts/docs.mjs && prettier --write README.md docs/rfc-001.md packages/*/README.md",
-    "docs:check": "pnpm run docs && git diff --exit-code -- README.md docs/rfc-001.md packages/*/README.md",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "lefthook install",
-    "ci:release": "node scripts/release.mjs && changeset tag && git push --follow-tags"
+    "validate": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm docs:check && pnpm test"
+  },
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "lefthook"
+    ]
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
@@ -29,17 +35,17 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import-x": "^4.16.2",
+    "format-package": "^8.0.0",
     "globals": "^17.6.0",
     "lefthook": "^2.1.9",
-    "markdown-magic": "catalog:",
-    "prettier": "catalog:",
+    "markdown-magic": "^4.8.0",
+    "markdown-magic-engines": "2.1.0",
+    "markdown-magic-install-command": "3.0.0",
+    "markdown-magic-package-scripts": "2.1.0",
+    "markdown-magic-prettier": "3.1.0",
+    "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1",
     "vitest": "catalog:"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "lefthook"
-    ]
   }
 }
