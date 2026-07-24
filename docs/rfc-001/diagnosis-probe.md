@@ -1,12 +1,12 @@
-# Evaluation Design: Bug-Cause Screen + Organization Validation
+# Evaluation Design: Bug-Cause Screen + Organization-Specific Validation
 
 **Status:** Reviewed design. Feeds RFC-001 §§16.2, 16.3, and 16.5, plus RFC-002.
 
 ## Construct — named precisely
 
-**Check 1 measures bug-cause diagnosis:** given buggy code + a learner question, does the model correctly identify _what is wrong and why_ — scored against a labeled cause? A code snapshot cannot establish a learner's mental model, so check 1 does **not** claim to measure misconception diagnosis. Actual misconception diagnosis requires learner-state evidence (their explanation of what they tried and expected) and is measured by **check 2**, built from authentic Organization episodes.
+**Check 1 measures bug-cause diagnosis:** given buggy code + a learner question, does the model correctly identify _what is wrong and why_ — scored against a labeled cause? A code snapshot cannot establish a learner's mental model, so check 1 does **not** claim to measure misconception diagnosis. Actual misconception diagnosis requires learner-state evidence (their explanation of what they tried and expected) and is measured by **check 2**, built from authentic learner-support episodes from the Organization.
 
-**Routing** (incidental → direct answer vs conceptual → guided) is a separate construct requiring Organization learning-objective context. It is **not** combined with diagnosis into any overall percentage, and check 1's prompt comparison cannot decide whether §16.3's classifier earns MVP inclusion — that requires the direct classifier-vs-prompt routing comparison designed below and frozen before outputs.
+**Routing** (incidental → direct answer vs conceptual → guided) is a separate construct requiring the Organization's learning-objective context. It is **not** combined with diagnosis into any overall percentage, and check 1's prompt comparison cannot decide whether §16.3's classifier earns MVP inclusion — that requires the direct classifier-vs-prompt routing comparison designed below and frozen before outputs.
 
 ## Check 1 — 20-case falsification screen
 
@@ -53,13 +53,13 @@ The §16.3 hidden classifier is retained in the MVP on a stakeholder decision, n
 
 This section records the pre-registration design and rule-freezing procedure. The case set and exact counts are committed at milestone 4 by the named humans before outputs; only then is the comparison pre-registered.
 
-## Check 2 — Organization validation (designed from check 1)
+## Check 2 — organization-specific validation (designed from check 1)
 
-- Items: authentic Organization learner episodes **with learner-state evidence** (what they tried/expected), enabling the real misconception-diagnosis construct; counterfactual routing pairs (same surface error, incidental in one learning context, conceptual in another; DIRECT / LADDER / CLARIFY as distinct correct responses).
+- Items: authentic learner episodes from the Organization **with learner-state evidence** (what they tried/expected), enabling the real misconception-diagnosis construct; counterfactual routing pairs (same surface error, incidental in one learning context, conceptual in another; DIRECT / LADDER / CLARIFY as distinct correct responses).
 - Reset smoke cases: multi-turn pairs that distinguish continuation of one blocker from a clearly different problem. These can falsify obvious reset behavior but do not establish accuracy; pilot review of logged reset/non-reset decisions measures real usage.
 - Size, rubric, and acceptance criteria set from check 1's observed error modes and rater agreement — committed _before_ check 2 runs.
 - Runs on the production server using the exact compressed model format planned for the pilot.
-- Parity: the same diagnosis cases and Organization-context routing/reset pairs run through an endpoint-agnostic command against pinned Mac vLLM-Metal and production Docker endpoints. Compare structured rubric outcomes, not exact wording; all production results still gate learner exposure.
+- Parity: the same diagnosis cases and deployment-context routing/reset pairs run through an endpoint-agnostic command against pinned Mac vLLM-Metal and production Docker endpoints. Compare structured rubric outcomes, not exact wording; all production results still gate learner exposure.
 
 ## If results are weak — escalation ladder (in order)
 
