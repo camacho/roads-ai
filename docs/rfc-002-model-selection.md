@@ -1,6 +1,6 @@
 # RFC 002: Model Selection & Evaluation
 
-**Status:** Draft companion to RFC 001 v2. RFC 001 is stable but not yet approved; the two RFCs are one approval unit and neither is staged, approved, or shipped without the other.
+**Status:** Draft companion to RFC 001 v2. RFC 001 is stable but not yet approved; the two RFCs are one approval unit and neither is approved or shipped without the other.
 
 **Author:** Patrick Camacho
 
