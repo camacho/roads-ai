@@ -393,18 +393,23 @@ State transitions are deterministic given the classifier result; response conten
 
 **Residual wide-area-network (WAN) paths:** stock `/share` first requires an installed, authenticated GitHub CLI, then runs only `gh gist create --public=false` against a temporary export; it does not expose general GitHub CLI or pull-request operations to the model. Stock `/login` can authenticate a built-in internet provider and `/model` can select it. In the exact pi commit fixed by this RFC, these learner-triggered commands run before extension hooks and cannot be intercepted by the Trestle extension ([E13](./evidence-ledger.md#e13)). For this reason, the accepted scoped MVP guarantee is only **no configured model WAN provider or tool path at launch**. A VM alone does not create a literal no-internet guarantee. A VM or host with managed egress rules that allow only the model-server address and port would; carrying a pi patch is the other option. A sandbox could add containment, but it is neither required by nor sufficient for the scoped guarantee.
 
-**Launch contract:**
+**Launch contract** - the POSIX-shell equivalent of the client spawn. The variable prefixes apply to the `pi` process only, so the child inherits both without `export`:
 
-```
-PI_OFFLINE=1
-PI_CODING_AGENT_DIR=<managed dir>          # isolates config/state from any personal pi install
-pi --provider trestle --model <selected-model-id>
-   --tools read,grep,find,ls               # write/edit/bash never registered
-   --no-context-files                      # repo instructions cannot alter policy
-   --no-skills --skill <bundled>/skills/ai-help-seeking
-   --no-extensions -e <bundled>/extension/trestle.ts   # discovery off; only our extension loads
-   --no-approve                            # no interactive approval flow
-   # (baseUrl pinned to the LAN server in provider config)
+```sh
+# --tools: write/edit/bash never registered
+# --no-context-files: repo instructions cannot alter policy
+# --no-skills --skill / --no-extensions -e: discovery off; only bundled content loads
+# --no-approve: no interactive approval flow
+# PI_CODING_AGENT_DIR isolates config/state from any personal pi install
+PI_OFFLINE=1 \
+PI_CODING_AGENT_DIR="<managed-dir>" \
+pi --provider trestle --model <selected-model-id> \
+  --tools read,grep,find,ls \
+  --no-context-files \
+  --no-skills --skill <bundled>/skills/ai-help-seeking \
+  --no-extensions -e <bundled>/extension/trestle.ts \
+  --no-approve
+# baseUrl is pinned to the LAN server in provider config
 ```
 
 The Trestle client owns environment variables, provider/model selection, the session-directory private-ACL check described in [§9](#9-data-privacy--the-pilot-transcript-rule), bundled-path resolution, and a clean credential environment, then starts `pi.exe`. It is a thin entrypoint, not a second agent application. `--no-skills --skill` and `--no-extensions -e` disable discovery while loading only bundled content. `PI_OFFLINE` disables pi's startup model-network operations; it is not a runtime firewall ([E28](./evidence-ledger.md#e28)). The bundled **AI skill** is a pi instruction package for effective help-seeking, not a learner curriculum; its adaptation from `learn-codebase` remains subject to the pre-pilot review ([§6](#6-decision-status--open-work)).
