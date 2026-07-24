@@ -4,7 +4,7 @@ Committed evaluation inputs for [RFC 001](../README.md) check 1 and the organiza
 
 ## Surface-change procedure
 
-Run this whenever the Organization's leader confirms or changes the technology surface (see [project-surface confirmation](../README.md#project-surface-confirmation)):
+Run this whenever a leader from the Organization confirms or changes the technology surface (see [project-surface confirmation](../README.md#project-surface-confirmation)):
 
 1. **Commit the new surface.** Record the confirmed languages, frameworks, project-size envelope, source, and date as a new revision of `surface.json`.
 2. **Regenerate only what depends on the surface.** Rerun the [case-generation replay](../workspace/case-generation/README.md) for the affected technology groups only; benchmark-floor cases and everything surface-independent stay.

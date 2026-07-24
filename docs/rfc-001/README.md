@@ -110,7 +110,7 @@ Whether a blocker is incidental is relative to the current learning objective. A
 
 **Given (non-negotiable, stakeholder):**
 
-- Every component and model must be free to download, run, and self-host for fewer than 50 of the Organization's engineers; OSI-approved licenses are preferred because they make compliance simpler, but are not required.
+- Every component and model must be free to download, run, and self-host for fewer than 50 engineers at the Organization; OSI-approved licenses are preferred because they make compliance simpler, but are not required.
 
 - The model is hosted locally; no third-party model API.
 
@@ -502,7 +502,7 @@ All factual references resolve through the [claim-level evidence ledger](./evide
 
 - `attempt-evidence.md` - attempt-event definition + transcripts
 
-- `diagnosis-probe.md` - model screen + Organization validation design
+- `diagnosis-probe.md` - model screen + organization-specific validation design
 
 - `stakeholder-questions.md` - decision ledger
 
