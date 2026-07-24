@@ -1,0 +1,191 @@
+<title>Deck Style Pick Sheet — 3 Options</title>
+<style>
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .opt { min-height: 100vh; display: flex; flex-direction: column; box-sizing: border-box; }
+  .optbar {
+    padding: 0.7rem 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    background: #17181a; color: #eceae6; font-size: 0.85rem;
+    border-bottom: 1px solid #2e3033;
+  }
+  .optbar b { font-size: 1rem; }
+  .chip { display: inline-block; width: 1rem; height: 1rem; border: 1px solid rgba(255,255,255,0.35); vertical-align: -3px; margin-left: 0.3rem; }
+  .optbar .note { color: #9aa0a8; }
+  .stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.25rem; }
+  .col { max-width: 640px; width: 100%; }
+
+  /* ---------- OPTION A: signal — navy/cream surfaces, one antique-gold accent ---------- */
+  .a-stage { background: #1c2644; }
+  .a-kicker { font-family: ui-monospace, Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c8a870; margin-bottom: 1rem; }
+  .a-kicker::before { content: ""; display: inline-block; width: 36px; height: 1px; background: #c8a870; vertical-align: 4px; margin-right: 0.6rem; }
+  .a-h { font-family: Georgia, "Source Serif 4", serif; font-weight: 600; font-size: 1.9rem; color: #e2dcd0; margin: 0 0 1.1rem; line-height: 1.2; }
+  .a-h em { font-style: italic; color: #c8a870; }
+  .a-li { color: #e2dcd0; font-size: 1rem; line-height: 1.6; padding: 0.55rem 0; border-bottom: 1px solid #2e3d5c; }
+  .a-li b { font-weight: 600; color: #ffffff; }
+  .a-panel { margin-top: 1.3rem; border: 1px solid #2e3d5c; }
+  .a-panel .s { padding: 0.6rem 0.9rem; font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8a96a8; }
+  .a-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .a-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #c8a870; color: #c8a870; }
+  .a-gatebtns span.f { background: #c8a870; color: #1c2644; font-weight: 600; }
+
+  /* ---------- OPTION B: blue-professional — cream ground, single cobalt accent ---------- */
+  .b-stage { background: #fdfae7; }
+  .b-kicker { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; font-weight: 700; margin-bottom: 1rem; }
+  .b-h { font-family: -apple-system, "Segoe UI", sans-serif; font-weight: 700; letter-spacing: -0.02em; font-size: 1.9rem; color: #111111; margin: 0 0 1.1rem; line-height: 1.2; }
+  .b-li { color: #6b6b6b; font-size: 1rem; line-height: 1.6; padding: 0.7rem 0.9rem; margin-bottom: 0.5rem; background: rgba(30,43,250,0.04); border: 1px solid rgba(30,43,250,0.2); border-radius: 8px; }
+  .b-li b { font-weight: 600; color: #111111; }
+  .b-panel { margin-top: 1.3rem; border: 1px solid rgba(30,43,250,0.2); border-radius: 8px; }
+  .b-panel .s { padding: 0.6rem 0.9rem; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; font-weight: 700; }
+  .b-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .b-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #1e2bfa; color: #1e2bfa; border-radius: 999px; }
+  .b-gatebtns span.f { background: #1e2bfa; color: #fdfae7; font-weight: 600; }
+
+  /* ---------- OPTION C: monochrome — ivory ledger, ink only ---------- */
+  .c-stage { background: #fafadf; }
+  .c-kicker { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8a80; margin-bottom: 1rem; }
+  .c-h { font-family: "Helvetica Neue", -apple-system, sans-serif; font-weight: 200; font-size: 2.1rem; color: #1a1a16; margin: 0 0 1.1rem; line-height: 1.2; }
+  .c-li { color: #5e5e54; font-size: 1rem; line-height: 1.65; padding: 0.55rem 0 0.55rem 1.4rem; position: relative; border-bottom: 1px solid rgba(26,26,22,0.14); }
+  .c-li::before { content: "—"; position: absolute; left: 0; color: #1a1a16; }
+  .c-li b { font-weight: 600; color: #1a1a16; }
+  .c-panel { margin-top: 1.3rem; border-top: 1px solid #1a1a16; border-bottom: 1px solid #1a1a16; }
+  .c-panel .s { padding: 0.6rem 0; font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8a80; }
+  .c-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .c-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #1a1a16; color: #1a1a16; }
+  .c-gatebtns span.f { background: #1a1a16; color: #fafadf; font-weight: 600; }
+
+  /* ---------- OPTION B-DARK: blue-professional discipline on a dark neutral ground ---------- */
+  .d-stage { background: #17181a; }
+  .d-kicker { font-family: -apple-system, "Segoe UI", sans-serif; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7b85ff; font-weight: 700; margin-bottom: 1rem; }
+  .d-h { font-family: -apple-system, "Segoe UI", sans-serif; font-weight: 700; letter-spacing: -0.02em; font-size: 1.9rem; color: #f2f1ee; margin: 0 0 1.1rem; line-height: 1.2; }
+  .d-li { color: #a9aaad; font-size: 1rem; line-height: 1.6; padding: 0.7rem 0.9rem; margin-bottom: 0.5rem; background: rgba(123,133,255,0.06); border: 1px solid rgba(123,133,255,0.22); border-radius: 8px; }
+  .d-li b { font-weight: 600; color: #f2f1ee; }
+  .d-panel { margin-top: 1.3rem; border: 1px solid rgba(123,133,255,0.22); border-radius: 8px; }
+  .d-panel .s { padding: 0.6rem 0.9rem; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7b85ff; font-weight: 700; }
+  .d-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .d-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #7b85ff; color: #7b85ff; border-radius: 999px; }
+  .d-gatebtns span.f { background: #7b85ff; color: #17181a; font-weight: 600; }
+
+  /* ---------- BLACK-GROUND VARIANTS ---------- */
+  .e-stage { background: #0a0a0b; }
+  .e-li { color: #a5a6aa; font-size: 1rem; line-height: 1.6; padding: 0.7rem 0.9rem; margin-bottom: 0.5rem; background: rgba(123,133,255,0.07); border: 1px solid rgba(123,133,255,0.25); border-radius: 8px; }
+  .e-li b { font-weight: 600; color: #f4f3f0; }
+  .e-h { font-family: -apple-system, "Segoe UI", sans-serif; font-weight: 700; letter-spacing: -0.02em; font-size: 1.9rem; color: #f4f3f0; margin: 0 0 1.1rem; line-height: 1.2; }
+  .f-stage { background: #0a0a0b; }
+  .f-h { font-family: Georgia, serif; font-weight: 600; font-size: 1.9rem; color: #e9e4d8; margin: 0 0 1.1rem; line-height: 1.2; }
+  .f-li { color: #d6d1c4; font-size: 1rem; line-height: 1.6; padding: 0.55rem 0; border-bottom: 1px solid #2a2a2c; }
+  .f-li b { font-weight: 600; color: #ffffff; }
+  .f-kicker { font-family: ui-monospace, Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c8a870; margin-bottom: 1rem; }
+  .f-kicker::before { content: ""; display: inline-block; width: 36px; height: 1px; background: #c8a870; vertical-align: 4px; margin-right: 0.6rem; }
+  .f-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #c8a870; color: #c8a870; }
+  .f-gatebtns span.f2 { background: #c8a870; color: #0a0a0b; font-weight: 600; }
+  .f-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .g-stage { background: #0a0a0b; }
+  .g-h { font-family: "Helvetica Neue", -apple-system, sans-serif; font-weight: 200; font-size: 2.1rem; color: #ecebe4; margin: 0 0 1.1rem; line-height: 1.2; }
+  .g-li { color: #a5a49b; font-size: 1rem; line-height: 1.65; padding: 0.55rem 0 0.55rem 1.4rem; position: relative; border-bottom: 1px solid rgba(236,235,228,0.16); }
+  .g-li::before { content: "—"; position: absolute; left: 0; color: #ecebe4; }
+  .g-li b { font-weight: 600; color: #ecebe4; }
+  .g-kicker { font-family: ui-monospace, Menlo, monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7c7b74; margin-bottom: 1rem; }
+  .g-gatebtns { margin-top: 1.4rem; display: flex; gap: 0.8rem; }
+  .g-gatebtns span { padding: 0.65rem 1.3rem; font-size: 0.9rem; border: 1px solid #ecebe4; color: #ecebe4; }
+  .g-gatebtns span.f2 { background: #ecebe4; color: #0a0a0b; font-weight: 600; }
+</style>
+
+<div class="opt">
+  <div class="optbar">
+    <b>Option A · "signal"</b>
+    <span>navy + cream surfaces, one gold accent<span class="chip" style="background:#1c2644"></span><span class="chip" style="background:#f0ece3"></span><span class="chip" style="background:#c8a870"></span></span>
+    <span class="note">Economist-briefing gravity · dark and light slides in one deck · both researchers' top pick · serif survives as Georgia</span>
+  </div>
+  <div class="stage a-stage"><div class="col">
+    <div class="a-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="a-h">Teaching policy — <em>the product itself</em></h2>
+    <div class="a-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="a-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="a-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="a-panel"><div class="s">Read the RFC text (§7)</div></div>
+    <div class="a-gatebtns"><span class="f">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+
+<div class="opt">
+  <div class="optbar">
+    <b>Option B · "blue-professional"</b>
+    <span>cream ground, single cobalt accent<span class="chip" style="background:#fdfae7"></span><span class="chip" style="background:#1e2bfa"></span><span class="chip" style="background:#111111"></span></span>
+    <span class="note">consulting-brief register · exactly one blue, used everywhere emphasis lives · light only · softest font dependency</span>
+  </div>
+  <div class="stage b-stage"><div class="col">
+    <div class="b-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="b-h">Teaching policy — the product itself</h2>
+    <div class="b-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="b-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="b-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="b-panel"><div class="s">Read the RFC text (§7)</div></div>
+    <div class="b-gatebtns"><span class="f">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+
+<div class="opt">
+  <div class="optbar">
+    <b>Option C · "monochrome"</b>
+    <span>ivory ledger, ink only — zero color<span class="chip" style="background:#fafadf"></span><span class="chip" style="background:#1a1a16"></span><span class="chip" style="background:#5e5e54"></span></span>
+    <span class="note">printed-journal calm · hierarchy purely by type weight and rules · cannot have sporadic accents by construction · status must be typographic</span>
+  </div>
+  <div class="stage c-stage"><div class="col">
+    <div class="c-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="c-h">Teaching policy — the product itself</h2>
+    <div class="c-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="c-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="c-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="c-panel"><div class="s">Read the RFC text (§7)</div></div>
+    <div class="c-gatebtns"><span class="f">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+<div class="opt">
+  <div class="optbar">
+    <b>Option D · "B-dark"</b>
+    <span>B's discipline on a dark neutral ground<span class="chip" style="background:#17181a"></span><span class="chip" style="background:#7b85ff"></span><span class="chip" style="background:#f2f1ee"></span></span>
+    <span class="note">same single-accent rules as B · neutral charcoal (not a blue) so no ambiguous blue families · accent lightened for dark-ground contrast, validator-passed · green/red stay reserved for verdicts</span>
+  </div>
+  <div class="stage d-stage"><div class="col">
+    <div class="d-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="d-h">Teaching policy — the product itself</h2>
+    <div class="d-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="d-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="d-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="d-panel"><div class="s">Read the RFC text (§7)</div></div>
+    <div class="d-gatebtns"><span class="f">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+<div class="opt">
+  <div class="optbar"><b>Black variant · E = B on black</b><span>cobalt discipline, near-black ground<span class="chip" style="background:#0a0a0b"></span><span class="chip" style="background:#7b85ff"></span></span><span class="note">same rules as B/D, ground darkened to near-black (#0A0A0B — true #000 makes glow/halation on OLED, so near-black is the print-grade norm)</span></div>
+  <div class="stage e-stage"><div class="col">
+    <div class="d-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="e-h">Teaching policy — the product itself</h2>
+    <div class="e-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="e-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="e-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="d-panel"><div class="s">Read the RFC text (§7)</div></div>
+    <div class="d-gatebtns"><span class="f">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+<div class="opt">
+  <div class="optbar"><b>Black variant · F = A's language on black</b><span>serif + one gold accent, no texture<span class="chip" style="background:#0a0a0b"></span><span class="chip" style="background:#c8a870"></span></span><span class="note">signal's serif/gold voice moved off navy onto near-black, mandatory grid texture dropped — a deviation from its design.md, honestly labeled</span></div>
+  <div class="stage f-stage"><div class="col">
+    <div class="f-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="f-h">Teaching policy — the product itself</h2>
+    <div class="f-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="f-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="f-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="f-gatebtns"><span class="f2">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>
+<div class="opt">
+  <div class="optbar"><b>Black variant · G = C inverted</b><span>bone ink on black, zero accents<span class="chip" style="background:#0a0a0b"></span><span class="chip" style="background:#ecebe4"></span></span><span class="note">monochrome flipped: hierarchy purely typographic, nothing colored anywhere</span></div>
+  <div class="stage g-stage"><div class="col">
+    <div class="g-kicker">Chunk B · Product contract · §7</div>
+    <h2 class="g-h">Teaching policy — the product itself</h2>
+    <div class="g-li"><b>Three response modes:</b> DIRECT (incidental friction → answer), LADDER (conceptual → progressively stronger guidance), CLARIFY (vague → one request for context).</div>
+    <div class="g-li"><b>Full reveal after two substantive attempt events</b> — a deliberately low starting point, labeled hypothesis; the pilot measures over-help, under-help, abandonment.</div>
+    <div class="g-li">After a reveal: one optional explain-back invitation, no follow-up if ignored.</div>
+    <div class="g-gatebtns"><span class="f2">Approve Chunk B</span><span>Request changes</span></div>
+  </div></div>
+</div>

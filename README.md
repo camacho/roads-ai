@@ -4,7 +4,7 @@ Roads AI is a local-first scaffold for an educational programming system built f
 
 - an open-source model hosted behind a local server
 - an open-source harness installed on a local device
-- a minimal TypeScript monorepo intended to evolve through the RFC in [docs/rfc-001.md](./docs/rfc-001.md)
+- a minimal TypeScript monorepo intended to evolve through the RFC in [docs/rfc-001/README.md](./docs/rfc-001/README.md)
 
 The current scaffold keeps the package behavior intentionally small. Both workspace packages expose an async `run` stub and can execute directly as scripts after build output is made executable.
 
@@ -39,4 +39,4 @@ flowchart LR
 
 - `packages/harness`: executable harness stub with an async `run`
 - `packages/model`: executable model stub with an async `run`
-- `docs/rfc-001.md`: RFC outline for the real harness/model design
+- `docs/rfc-001/README.md`: RFC outline for the real harness/model design
