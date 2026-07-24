@@ -966,8 +966,10 @@ flowchart LR
   });
 
   // ---- review state: comments + chunk verdicts, localStorage only ----
-  const CKEY = "trestle-rfc-review-comments-v1";
-  const VKEY = "trestle-rfc-review-verdicts-v1";
+  const BUILD_NS = "6c67ad95b9f38d7f9a75759ad29d00e9f4178e52aaf0c91dee0702d519c5b81f.eaf352ba54315672dc21a769367f6ac9f86ac92e242603eb47e07d68de188ba3";
+  const CKEY = "trestle-rfc-review-comments-v2-" + BUILD_NS;
+  const VKEY = "trestle-rfc-review-verdicts-v2-" + BUILD_NS;
+  const CHKEY = "trestle-rfc-review-checks-v2-" + BUILD_NS;
   const load = (k) => {
     const fallback = k === CKEY ? [] : {};
     try {
@@ -1173,14 +1175,13 @@ flowchart LR
   document.getElementById("cclear").onclick = (e) => {
     if (!clearArmed) { clearArmed = true; e.target.textContent = "Really delete all?"; setTimeout(() => { clearArmed = false; e.target.textContent = "Clear all"; }, 2500); armHide(); return; }
     store(CKEY, []); store(VKEY, {});
-    localStorage.removeItem("trestle-rfc-review-checks-v1");
+    localStorage.removeItem(CHKEY);
     if (typeof checkState === "object") Object.keys(checkState).forEach((k) => delete checkState[k]);
     document.querySelectorAll('ul.sum input[type="checkbox"]').forEach((b) => { b.checked = false; b.closest("li") && b.closest("li").classList.remove("checked"); });
     if (typeof updateRailCompletion === "function") updateRailCompletion();
     clearArmed = false; e.target.textContent = "Clear all"; cexport.style.display = "none"; render();
   };
   // ---- checkbox bullets: transform ul.sum li into toggleable rows ----
-  const CHKEY = "trestle-rfc-review-checks-v1";
   const checkState = load(CHKEY);
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   slides.forEach((slide, sIdx) => {
