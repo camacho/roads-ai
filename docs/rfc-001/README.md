@@ -396,18 +396,21 @@ State transitions are deterministic given the classifier result; response conten
 **Launch contract** - the POSIX-shell equivalent of the client spawn. The variable prefixes apply to the `pi` process only, so the child inherits both without `export`:
 
 ```sh
+# Pre-resolved by the Trestle client before the spawn:
+#   SELECTED_MODEL_ID - the model chosen by RFC-002's selection
+#   MANAGED_DIR       - isolated pi config/state dir, never a personal pi install
+#   BUNDLED_DIR       - the client's bundled payload root
 # --tools: write/edit/bash never registered
 # --no-context-files: repo instructions cannot alter policy
 # --no-skills --skill / --no-extensions -e: discovery off; only bundled content loads
 # --no-approve: no interactive approval flow
-# PI_CODING_AGENT_DIR isolates config/state from any personal pi install
 PI_OFFLINE=1 \
-PI_CODING_AGENT_DIR="<managed-dir>" \
-pi --provider trestle --model <selected-model-id> \
+PI_CODING_AGENT_DIR="$MANAGED_DIR" \
+pi --provider trestle --model "$SELECTED_MODEL_ID" \
   --tools read,grep,find,ls \
   --no-context-files \
-  --no-skills --skill <bundled>/skills/ai-help-seeking \
-  --no-extensions -e <bundled>/extension/trestle.ts \
+  --no-skills --skill "$BUNDLED_DIR/skills/ai-help-seeking" \
+  --no-extensions -e "$BUNDLED_DIR/extension/trestle.ts" \
   --no-approve
 # baseUrl is pinned to the LAN server in provider config
 ```
