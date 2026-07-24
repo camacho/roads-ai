@@ -58,6 +58,7 @@ extracted directory:
 export SPIKE_DIR=/private/tmp/roads-rfc001-local-model-spike
 export VLLM_METAL_PIN=55a97b9a7b3dd84c69e91fb1872abcb769336070
 export UV_CACHE_DIR="$SPIKE_DIR/uv-cache"
+mkdir -p "$SPIKE_DIR"
 
 curl -L \
   "https://github.com/vllm-project/vllm-metal/archive/$VLLM_METAL_PIN.tar.gz" \
