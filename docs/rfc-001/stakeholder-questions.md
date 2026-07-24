@@ -21,7 +21,7 @@ When "unblock the learner" and "prevent copy-paste" conflict, which wins?
 
 Use JavaScript/TypeScript, Node.js, HTML/CSS, PHP, and WebGL as the working MVP surface. This unblocks RFC and probe design without asserting that the list represents the actual cohort.
 
-**Non-blocking follow-up:** ask a Roads leader which frameworks and typical project sizes the first cohort actually uses before the check-1 case set is frozen; update committed `probe/surface.json` and refine the item mix from that answer.
+**Non-blocking follow-up:** ask an Organization leader which frameworks and typical project sizes the first cohort actually uses before the check-1 case set is frozen; update committed `probe/surface.json` and refine the item mix from that answer.
 
 _(Former Q3, pilot concurrency cap, moved to deferred ledger D9 after Codex scope audit — a one-machine pilot needs no fleet sizing.)_
 
@@ -53,7 +53,7 @@ _Correction logged: revision 1 claimed a joint lean toward capping conceptual bl
   - _Individual check-in:_ any single learner reaching 3 tool-attributed abandonments gets a human check-in (raised from 2 — pilot-participant goodwill, Patrick 12:31Z).
   - _Bootstrap:_ under 10 total sessions, review every event with human judgment rather than percentages.
 - **Unassisted-study owner — Proposed, open, non-blocking:** Patrick (updates D8). The study design itself — a human-owned comparable-problem baseline and analysis, not a with-vs-without experiment — remains to be fixed.
-- **Check-1 case sourcing — APPROVED method:** for the fresh-authored strata, agents mine concepts and documented failure conditions from license-checked educational sources, write fresh buggy code with a known single cause or deliberately insufficient visible evidence, and record where each idea came from. Sources establish technical semantics, not mistake prevalence. Two humans select 10 web-surface and 4 incidental cases from the larger pool, adjudicate labels and scoring dimensions, add the 6 benchmark-floor cases, and freeze the final 20 before candidate-model outputs are produced. These are curriculum-derived _synthetic_ cases; authentic Roads episodes remain check 2. **Proposed evaluators (open, non-blocking):** Patrick + the surface-confirming Roads leader. The generation run is kept as a rerunnable spike keyed to `probe/surface.json`, so a changed tech stack replays it with new input (details live in the spike, not here).
+- **Check-1 case sourcing — APPROVED method:** for the fresh-authored strata, agents mine concepts and documented failure conditions from license-checked educational sources, write fresh buggy code with a known single cause or deliberately insufficient visible evidence, and record where each idea came from. Sources establish technical semantics, not mistake prevalence. Two humans select 10 web-surface and 4 incidental cases from the larger pool, adjudicate labels and scoring dimensions, add the 6 benchmark-floor cases, and freeze the final 20 before candidate-model outputs are produced. These are curriculum-derived _synthetic_ cases; authentic Organization episodes remain check 2. **Proposed evaluators (open, non-blocking):** Patrick + the surface-confirming Organization leader. The generation run is kept as a rerunnable spike keyed to `probe/surface.json`, so a changed tech stack replays it with new input (details live in the spike, not here).
 
 ---
 

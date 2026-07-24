@@ -16,9 +16,9 @@ Trestle keeps developers **unblocked when a senior engineer is unavailable** wit
 
 **Current status:** RFC under review; milestone 0 is in progress. The resource/endpoint spike is complete, the next gate is one real pi-to-model turn, and there are no active blockers. Proposed open work is in [§6](#6-decision-status--open-work); delivery gates are in [§12](#12-delivery-milestones-and-implementation-sequence).
 
-The MVP is a pinned open-source coding-agent CLI (pi), a fixed teaching prompt, one adapted community skill, a Roads-managed LAN vLLM inference server, and one bespoke runtime component: a thin extension that owns attempt state, pacing instructions, status, and capability guardrails. vLLM-Metal runs natively only for development on the MacBook; learners use the Ubuntu Trestle Model Server over the Roads LAN, running a pinned official vLLM OpenAI Docker image. Both serve the same OpenAI-compatible endpoint. Policy servers, output checking, and telemetry are deferred and require pilot evidence ([§12](#12-delivery-milestones-and-implementation-sequence)).
+The MVP is a pinned open-source coding-agent CLI (pi), a fixed teaching prompt, one adapted community skill, an Organization-managed LAN vLLM inference server, and one bespoke runtime component: a thin extension that owns attempt state, pacing instructions, status, and capability guardrails. vLLM-Metal runs natively only for development on the MacBook; learners use the Ubuntu Trestle Model Server over the Organization LAN, running a pinned official vLLM OpenAI Docker image. Both serve the same OpenAI-compatible endpoint. Policy servers, output checking, and telemetry are deferred and require pilot evidence ([§12](#12-delivery-milestones-and-implementation-sequence)).
 
-**Terminology:** in this RFC, **local-only** names the deployment boundary: model inference is Roads-hosted and no WAN model provider or tool path is configured at launch. It does not claim host-level network isolation; stock learner-triggered residuals are disclosed in §15. The model is the neural network that generates responses. Pi is the **harness**: it owns the conversation loop, tools, state, and interface. When pi connects the model to those tools, the running combination behaves as an **agent**; Trestle constrains that agent by configuring the harness.
+**Terminology:** in this RFC, **the Organization** (capitalized) is the organization deploying Trestle and running the supervised pilot. **local-only** names the deployment boundary: model inference is Organization-hosted and no WAN model provider or tool path is configured at launch. It does not claim host-level network isolation; stock learner-triggered residuals are disclosed in §15. The model is the neural network that generates responses. Pi is the **harness**: it owns the conversation loop, tools, state, and interface. When pi connects the model to those tools, the running combination behaves as an **agent**; Trestle constrains that agent by configuring the harness.
 
 Two kinds of restriction, held at different strengths:
 
@@ -27,11 +27,11 @@ Two kinds of restriction, held at different strengths:
 | **Can't** - the model has no write/execute tools and no configured WAN provider or tool path at launch | Harness config + extension | Hard for good-faith use; learner-triggered built-ins are disclosed residuals ([§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)) |
 | **Shouldn't** - hand over a solution before the learner has engaged                                    | Model policy               | Soft. A default, not a wall.                                                                                                                  |
 
-The hard layer removes model write/execute tools and confines reads to the workspace selected at launch. The design assumes good-faith learners and a Roads-managed LAN: it prevents accidents and drift, not determined bypass. Stock pi still exposes learner-invoked WAN commands, so the accepted MVP guarantee is scoped to no configured model WAN provider or tool path at launch ([§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)).
+The hard layer removes model write/execute tools and confines reads to the workspace selected at launch. The design assumes good-faith learners and an Organization-managed LAN: it prevents accidents and drift, not determined bypass. Stock pi still exposes learner-invoked WAN commands, so the accepted MVP guarantee is scoped to no configured model WAN provider or tool path at launch ([§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)).
 
 ### 2. Problem
 
-Roads develops engineers through projects and supervised work. When no mentor is available, they must wait, use an answer-oriented assistant, or struggle past the point where effort remains productive.
+The Organization develops engineers through projects and supervised work. When no mentor is available, they must wait, use an answer-oriented assistant, or struggle past the point where effort remains productive.
 
 A randomized trial of nearly 1,000 high-school math students found that unfettered GPT-4 improved assisted practice but reduced later unassisted exam scores by 17% versus no AI ([E01](./evidence-ledger.md#e01)). Transfer to novice programming is a pilot hypothesis, not an established fact.
 
@@ -74,7 +74,7 @@ Bounds reasoning is the learning objective, so Trestle guides without giving the
 
 Whether a blocker is incidental is relative to the current learning objective. A fixed "never answer" rule gets this distinction wrong.
 
-**Provisional MVP surface:** web development, using JavaScript/TypeScript, Node.js, HTML/CSS, PHP, and WebGL as the working language/technology set. A Roads leader should confirm the actual frameworks and typical project sizes before check 1 is frozen; this [open dependency](#project-surface-confirmation) can refine the evaluation mix but does not block this RFC.
+**Provisional MVP surface:** web development, using JavaScript/TypeScript, Node.js, HTML/CSS, PHP, and WebGL as the working language/technology set. An Organization leader should confirm the actual frameworks and typical project sizes before check 1 is frozen; this [open dependency](#project-surface-confirmation) can refine the evaluation mix but does not block this RFC.
 
 **If that input changes:** commit the new surface, regenerate only the surface-dependent cases, freeze them before any model output, and rerun the evaluation gates; earlier model-selection claims do not carry over until that rerun passes. The step-by-step procedure lives in the [probe directory](./probe/README.md).
 
@@ -88,7 +88,7 @@ Whether a blocker is incidental is relative to the current learning objective. A
 
 - Structurally prevent the model from writing learner code.
 
-- Operate locally on Roads infrastructure.
+- Operate locally on Organization infrastructure.
 
 - Provide a Windows-native, low-friction install.
 
@@ -110,13 +110,13 @@ Whether a blocker is incidental is relative to the current learning objective. A
 
 **Given (non-negotiable, stakeholder):**
 
-- Every component and model must be free to download, run, and self-host for fewer than 50 Roads engineers; OSI-approved licenses are preferred because they make compliance simpler, but are not required.
+- Every component and model must be free to download, run, and self-host for fewer than 50 Organization engineers; OSI-approved licenses are preferred because they make compliance simpler, but are not required.
 
 - The model is hosted locally; no third-party model API.
 
-- The client runs on Windows machines on the Roads LAN.
+- The client runs on Windows machines on the Organization LAN.
 
-- Learner model calls go only to the Roads-managed LAN Trestle Model Server; no WAN model provider is configured, subject to the disclosed stock-pi residuals ([§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)).
+- Learner model calls go only to the Organization-managed LAN Trestle Model Server; no WAN model provider is configured, subject to the disclosed stock-pi residuals ([§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)).
 
 - No full solutions handed over for copy-paste, as qualified by unblock-first ([§2](#2-problem)).
 
@@ -141,7 +141,7 @@ Accepted decisions and answered questions live in the [stakeholder decision shee
 **Assignments (who does it - proposed owners, open, non-blocking):**
 
 - **Check-1 evaluators** - two humans independently adjudicate agent-drafted case labels, freeze the rejection rule before any model output, and rate the screen ([§12](#12-delivery-milestones-and-implementation-sequence)).  
-  _Proposed: Patrick + the surface-confirming Roads leader._
+  _Proposed: Patrick + the surface-confirming Organization leader._
 
 - **Unassisted-study owner** - owns the comparable-problem baseline, timing, and analysis for [risk ②](#risk-2); cannot be an agent. The study design itself is still to be fixed.  
   _Proposed: Patrick._
@@ -153,7 +153,7 @@ Accepted decisions and answered questions live in the [stakeholder decision shee
 - **Transcript export custody** - opt-in exports go to a designated leader-controlled, LAN-connected device; that leader owns deletion within 30 days after pilot end; authorized-recipient identity stays open ([§11](#11-pilot-protocol)).  
   _Proposed: designated leader-controlled device; recipient identity remains open._
 
-- **Pilot stop thresholds** - pause immediately if private information or source code leaves the approved Roads path, or if Trestle gives unsafe guidance. Pause for quality if both reviewers agree that 2 of the 10 most recent reviewed sessions contain a wrong primary diagnosis. Pause for abandonment if 3 of those sessions end without an accepted next step and the learner attributes that to Trestle. Check in with any learner who reaches 3 such abandonments. Until 10 sessions exist, review every event individually. Full definitions: [stakeholder sheet](./stakeholder-questions.md).  
+- **Pilot stop thresholds** - pause immediately if private information or source code leaves the approved Organization path, or if Trestle gives unsafe guidance. Pause for quality if both reviewers agree that 2 of the 10 most recent reviewed sessions contain a wrong primary diagnosis. Pause for abandonment if 3 of those sessions end without an accepted next step and the learner attributes that to Trestle. Check in with any learner who reaches 3 such abandonments. Until 10 sessions exist, review every event individually. Full definitions: [stakeholder sheet](./stakeholder-questions.md).  
   _Proposed: these thresholds are operational starting points, not evidence-derived facts._
 
 **Measurements to be answered at named gates:**
@@ -162,7 +162,7 @@ Accepted decisions and answered questions live in the [stakeholder decision shee
 
 **Dependencies (external input):**
 
-- <a id="project-surface-confirmation"></a>**Project-surface confirmation (non-blocking)** - a Roads leader confirms the actual web frameworks and typical project sizes before the case set is frozen; the answer updates committed `probe/surface.json`, and the rerunnable case-generation spike replays with the new input. Until then the provisional JavaScript/TypeScript, Node.js, HTML/CSS, PHP, and WebGL surface stands.
+- <a id="project-surface-confirmation"></a>**Project-surface confirmation (non-blocking)** - an Organization leader confirms the actual web frameworks and typical project sizes before the case set is frozen; the answer updates committed `probe/surface.json`, and the rerunnable case-generation spike replays with the new input. Until then the provisional JavaScript/TypeScript, Node.js, HTML/CSS, PHP, and WebGL surface stands.
 
 **Deferred (deliberately not discussed now - before rollout or later):** Windows/AVX2 fleet check; code-signing eligibility; distribution/update mechanism; topic-reporting visibility and mentor action; concurrency cap; cost-model assumptions. Ledger: [stakeholder sheet](./stakeholder-questions.md).
 
@@ -226,7 +226,7 @@ The cited structured-tutor trial supplied expert-authored solutions ([E05](./evi
 | **As a learner, I want Trestle to read the project I selected without inspecting unrelated personal files.**                    | The extension limits read tools to the launch workspace.                                                                                         | Out-of-workspace reads are rejected while project reads succeed.                                                      |
 | **As a mentor, I want the learner to arrive with attempts and a current explanation so we do not restart diagnosis from zero.** | Trestle elicits predictions and attempted changes, optionally invites explain-back, and lets the learner export and share the native pi session. | A shared session contains the blocker and attempts; it includes a learner explanation when they chose to provide one. |
 | **As a leader, I want assurance that generated code cannot silently enter the repository.**                                     | Pi never registers write/edit/execute tools, and the extension rejects shell escapes.                                                            | Boundary tests leave the project unchanged; transfer requires deliberate learner action.                              |
-| **As a security administrator, I want source code to stay on Roads infrastructure.**                                            | The launcher pins the LAN provider, starts with clean WAN credentials, and exposes no model web tool.                                            | Scoped launch checks pass; a literal guarantee additionally requires managed egress to only the model server.         |
+| **As a security administrator, I want source code to stay on Organization infrastructure.**                                     | The launcher pins the LAN provider, starts with clean WAN credentials, and exposes no model web tool.                                            | Scoped launch checks pass; a literal guarantee additionally requires managed egress to only the model server.         |
 
 ### 9. Data, Privacy & the Pilot Transcript Rule
 
@@ -253,7 +253,7 @@ The system is built before it is evaluated; evaluation gates learner exposure an
 
 **Check 1 - bug-cause screen.** During milestone 4 preparation, the team assembles a 20-case screen using the reviewed method in the [evaluation design](./diagnosis-probe.md): 6 benchmark-floor cases plus 10 web-surface and 4 incidental cases selected from a larger agent-authored pool. Two named human reviewers independently adjudicate every proposed label and scoring dimension, freeze the rejection rule before seeing candidate-model outputs, and rate the screen. Passing only means the candidate avoided obvious failure; it does not establish that the tutor is adequate. If none pass: iterate the prompt -> try another model that fits the currently available development hardware -> narrow the supported project surface -> ask the stakeholder to change scope.
 
-**Check 2 - real-world model validation.** Start with authentic Roads help episodes that include what the learner tried, expected, and misunderstood. For routing tests, human reviewers create a counterfactual version of selected episodes by changing only the stated learning objective; this tests DIRECT versus LADDER without pretending the same episode occurred twice. Run the finalist against the production model server using the exact compressed model artifact planned for the pilot. This checks diagnosis and routing with actual learner context before exposure.
+**Check 2 - real-world model validation.** Start with authentic Organization help episodes that include what the learner tried, expected, and misunderstood. For routing tests, human reviewers create a counterfactual version of selected episodes by changing only the stated learning objective; this tests DIRECT versus LADDER without pretending the same episode occurred twice. Run the finalist against the production model server using the exact compressed model artifact planned for the pilot. This checks diagnosis and routing with actual learner context before exposure.
 
 **Pilot outcomes** - each rate names both the event being counted and the total set it is divided by, so another reviewer can calculate it the same way:
 
@@ -294,15 +294,15 @@ flowchart LR
   M5 --> M6{6 - Follow-ups\nnone committed}
 ```
 
-| Milestone                                  | Status      | Contains                                                                                                                                                                                                        | Gate to next                                                                                                                                                                                                                             |
-| ------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **0 - Development foundation**             | In progress | Run a swappable candidate model on the development MacBook with pinned vLLM-Metal; connect pinned pi through the OpenAI-compatible API; identify the Roads server owner and target environment                  | One real end-to-end pi turn. No teaching, LAN, or quality claim yet.                                                                                                                                                                     |
-| **1 - Restricted Trestle Client**          | Not started | Package the launcher and pinned pi; pin the Trestle provider; disable ambient config; register only pi's read/grep/find/ls tools, leaving write/edit/bash unavailable to the model                              | The Windows archive starts against a controlled test endpoint and passes packaging, offline, and config-level tool checks; shell/path residuals move to milestone 2                                                                      |
-| **2 - Teaching MVP**                       | Not started | Add the Trestle extension, fixed teaching prompt, and one bundled AI skill; complete the guard set by blocking shell escapes and out-of-workspace reads                                                         | Response modes, attempt/reset state, mid-stream input rejection, local decision entries, optional explain-back, pacing, status, fail-closed behavior, shell/path guards, and exemplar transcripts pass                                   |
-| **3 - LAN server and Windows integration** | Not started | Roads server and hardware owners provision the Ubuntu host; run a pinned vLLM image with a baseline model artifact; configure LAN addressing and access; extract and run the client on a target Windows machine | The Windows client completes a streamed turn against the LAN Trestle Model Server; server ownership, hardware/runtime manifest, network path, startup/recovery procedure, and observed latency are recorded. No model-quality claim yet. |
-| **4 - Evaluate, select, and tune**         | Not started | Run check 1; swap candidate models/prompts; select named development and production artifacts; deploy the selected production artifact; run parity, check 2, and load tests; tune server allocation             | The model/artifact selection is recorded; parity differences are reviewed; pre-registered correctness and safety rules pass; pilot latency and capacity are demonstrated                                                                 |
-| **5 - Supervised pilot**                   | Not started | Small learner cohort under [§11](#11-pilot-protocol); collect [§10](#10-post-build-evaluation) outcomes and stop on pre-agreed failure thresholds                                                               | Stakeholder reviews the pilot evidence                                                                                                                                                                                                   |
-| **6 - Evidence-triggered follow-ups**      | Conditional | Policy proxy; output check; rules distribution; topic reporting                                                                                                                                                 | **None committed.** Each requires a specific pilot failure or operational need and its own decision                                                                                                                                      |
+| Milestone                                  | Status      | Contains                                                                                                                                                                                                               | Gate to next                                                                                                                                                                                                                             |
+| ------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0 - Development foundation**             | In progress | Run a swappable candidate model on the development MacBook with pinned vLLM-Metal; connect pinned pi through the OpenAI-compatible API; identify the Organization server owner and target environment                  | One real end-to-end pi turn. No teaching, LAN, or quality claim yet.                                                                                                                                                                     |
+| **1 - Restricted Trestle Client**          | Not started | Package the launcher and pinned pi; pin the Trestle provider; disable ambient config; register only pi's read/grep/find/ls tools, leaving write/edit/bash unavailable to the model                                     | The Windows archive starts against a controlled test endpoint and passes packaging, offline, and config-level tool checks; shell/path residuals move to milestone 2                                                                      |
+| **2 - Teaching MVP**                       | Not started | Add the Trestle extension, fixed teaching prompt, and one bundled AI skill; complete the guard set by blocking shell escapes and out-of-workspace reads                                                                | Response modes, attempt/reset state, mid-stream input rejection, local decision entries, optional explain-back, pacing, status, fail-closed behavior, shell/path guards, and exemplar transcripts pass                                   |
+| **3 - LAN server and Windows integration** | Not started | Organization server and hardware owners provision the Ubuntu host; run a pinned vLLM image with a baseline model artifact; configure LAN addressing and access; extract and run the client on a target Windows machine | The Windows client completes a streamed turn against the LAN Trestle Model Server; server ownership, hardware/runtime manifest, network path, startup/recovery procedure, and observed latency are recorded. No model-quality claim yet. |
+| **4 - Evaluate, select, and tune**         | Not started | Run check 1; swap candidate models/prompts; select named development and production artifacts; deploy the selected production artifact; run parity, check 2, and load tests; tune server allocation                    | The model/artifact selection is recorded; parity differences are reviewed; pre-registered correctness and safety rules pass; pilot latency and capacity are demonstrated                                                                 |
+| **5 - Supervised pilot**                   | Not started | Small learner cohort under [§11](#11-pilot-protocol); collect [§10](#10-post-build-evaluation) outcomes and stop on pre-agreed failure thresholds                                                                      | Stakeholder reviews the pilot evidence                                                                                                                                                                                                   |
+| **6 - Evidence-triggered follow-ups**      | Conditional | Policy proxy; output check; rules distribution; topic reporting                                                                                                                                                        | **None committed.** Each requires a specific pilot failure or operational need and its own decision                                                                                                                                      |
 
 The resource-spike portion of milestone 0 step 1 is complete ([E29](./evidence-ledger.md#e29)); the real end-to-end pi turn remains the milestone gate.
 
@@ -313,7 +313,7 @@ The restricted client in milestone 1 proves the local agent foundation, but it i
 | Step | Milestone | Build or improve                                                                                                                                                                                                        | Deliverable and proof                                                                                                                                  |
 | ---- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 1    | 0         | Start one provisional development model on the MacBook with pinned vLLM-Metal and expose its OpenAI-compatible endpoint                                                                                                 | Pinned development model/artifact/config record and a successful developer-local completion                                                            |
-| 2    | 0         | Connect the pinned pi harness to that endpoint; begin preparing the Roads-hosted server in parallel                                                                                                                     | End-to-end learner turn through pi; server owner and target environment recorded                                                                       |
+| 2    | 0         | Connect the pinned pi harness to that endpoint; begin preparing the Organization-hosted server in parallel                                                                                                              | End-to-end learner turn through pi; server owner and target environment recorded                                                                       |
 | 3    | 1         | Build the Trestle launcher and Windows bundle around pi; add managed config and the config-level tool restrictions in [§15](#15-mvp-architecture-locked-down-pi--one-thin-extension)                                    | Extractable client archive plus packaging, offline, and model-tool-allowlist results                                                                   |
 | 4    | 2         | Implement the Trestle extension; add new-problem reset and compact local decision entries; add the fixed prompt and reviewed `ai-help-seeking` skill; complete shell and workspace-path guards                          | Extension source, prompt, skill, reset/state/logging tests, shell/path boundary results, and exemplar sessions                                         |
 | 5    | 3         | Provision the Ubuntu server with a pinned vLLM image and baseline artifact; configure LAN access; check target Windows hardware, choose Bun's fast or baseline target, then run the extracted client against the server | Server owner and runtime manifest, Windows hardware check, client/server streamed turn, network evidence, startup/recovery notes, and observed latency |
@@ -339,7 +339,7 @@ Because this is scoped to good-faith use, pedagogical failure ranks above securi
 
 ### 14. Cost
 
-**Hardware:** development begins on an available MacBook while the Roads-hosted server is prepared. No purchase or fixed GPU-memory requirement is assumed. Final server allocation follows a load test using the selected model, compressed format, engine version, cache precision, and observed request sizes.
+**Hardware:** development begins on an available MacBook while the Organization-hosted server is prepared. No purchase or fixed GPU-memory requirement is assumed. Final server allocation follows a load test using the selected model, compressed format, engine version, cache precision, and observed request sizes.
 
 **Operating cost:** local inference replaces API fees with hardware, electricity, and maintenance. No pre-pilot savings claim is made; after the pilot, report cost per successful unblock.
 
@@ -366,7 +366,7 @@ flowchart LR
   subgraph Provisioning[Provisioning only - not learner runtime]
     Registry[Approved model source<br/>for example Hugging Face] --> Stage[Stage selected artifact]
   end
-  subgraph Server[Trestle Model Server - Roads LAN]
+  subgraph Server[Trestle Model Server - Organization LAN]
     Stage --> Artifact[Model artifact<br/>weights + tokenizer + config]
     Request[OpenAI-compatible endpoint] --> Engine[vLLM inference engine]
     Artifact --> Engine
@@ -375,7 +375,7 @@ flowchart LR
   Client[Trestle Client] <-->|LAN requests + streamed responses| Request
 ```
 
-Roads manages a versioned model artifact on the server. The artifact includes the learned weights plus the tokenizer, model configuration, chat template, and any required helper files. **Provisioning** is the administrator's setup before learner use: download, license-check, verify, and stage that complete artifact. The server then needs no model-registry access at runtime. The selected model remains configuration behind the OpenAI-compatible API seam.
+The Organization manages a versioned model artifact on the server. The artifact includes the learned weights plus the tokenizer, model configuration, chat template, and any required helper files. **Provisioning** is the administrator's setup before learner use: download, license-check, verify, and stage that complete artifact. The server then needs no model-registry access at runtime. The selected model remains configuration behind the OpenAI-compatible API seam.
 
 **The extension is the only bespoke component inside the agent loop; the launcher is only a packaging/configuration entrypoint.** The extension:
 
@@ -421,7 +421,7 @@ The Trestle client owns environment variables, provider/model selection, the ses
 
 - [ ]
 
-  Model server is bound to a Roads-managed LAN segment with no WAN exposure.
+  Model server is bound to an Organization-managed LAN segment with no WAN exposure.
 
 - [ ]
 
@@ -437,7 +437,7 @@ The stable seam is the OpenAI-compatible `/v1/chat/completions` API served direc
 
 A resource spike served the pinned 4-bit Qwen2.5-Coder-7B model through this API on the actual 16 GB M1 development Mac and returned the exact control response in 3.99s ([E29](./evidence-ledger.md#e29)). That proves the pinned single-sequence development path, not model adequacy, production parity, or capacity.
 
-Trestle does not require the Metal and CUDA paths to produce bit-identical output. CUDA is NVIDIA's GPU computing platform, used here by the production inference server. Reproducibility instead means pinning the same base model identity plus separate hashes and configs for the Mac MLX artifact and production CUDA artifact, then measuring task-level equivalence. One endpoint-agnostic parity command runs diagnosis cases and Roads-context routing pairs against both endpoints using deterministic-as-practical settings and reports rubric-level differences, not wording or floating-point equality. Full evaluation still reruns on the exact production representation before pilot use.
+Trestle does not require the Metal and CUDA paths to produce bit-identical output. CUDA is NVIDIA's GPU computing platform, used here by the production inference server. Reproducibility instead means pinning the same base model identity plus separate hashes and configs for the Mac MLX artifact and production CUDA artifact, then measuring task-level equivalence. One endpoint-agnostic parity command runs diagnosis cases and Organization-context routing pairs against both endpoints using deterministic-as-practical settings and reports rubric-level differences, not wording or floating-point equality. Full evaluation still reruns on the exact production representation before pilot use.
 
 #### 16.2 Model capability bar
 
@@ -447,7 +447,7 @@ The model must diagnose correctly before deciding what to reveal. Existing resul
 
 Before the learner sees an answer, one hidden model call chooses DIRECT, LADDER, or CLARIFY and decides whether the learner's message counts as an attempt. The extension validates that small decision and updates session state; it does not assign a topic taxonomy or send telemetry. The practical effect is that incidental friction can receive an immediate answer, conceptual blockers receive progressively stronger guidance, and vague questions receive one request for context.
 
-Each accepted learner turn therefore makes two requests to the Roads-managed LAN model server: the hidden classifier request, then the teaching request. The classifier must not replay the full growing transcript. Its input is fixed classifier instructions, current extension state, the newest learner message, and the most recent complete conversation messages that fit a fixed token budget. The implementation records that budget with the classifier prompt and preserves the newest message before adding older messages. This follows a documented token-based history-reduction pattern ([E30](./evidence-ledger.md#e30)); here it prevents classifier input from growing with the full teaching context rather than creating another summarization step.
+Each accepted learner turn therefore makes two requests to the Organization-managed LAN model server: the hidden classifier request, then the teaching request. The classifier must not replay the full growing transcript. Its input is fixed classifier instructions, current extension state, the newest learner message, and the most recent complete conversation messages that fit a fixed token budget. The implementation records that budget with the classifier prompt and preserves the newest message before adding older messages. This follows a documented token-based history-reduction pattern ([E30](./evidence-ledger.md#e30)); here it prevents classifier input from growing with the full teaching context rather than creating another summarization step.
 
 The exact production overhead is unmeasured. The development curiosity probe used a different, reason-bearing `new_problem` prompt, so its token counts do not estimate the production three-field verdict ([E29](./evidence-ledger.md#e29)). The existing end-to-end learner latency and load-test gates cover whether the two-request design is usable; per-request token and GPU telemetry is outside this MVP.
 
@@ -467,9 +467,9 @@ The prompt requires uncertainty admission and mentor escalation. The MVP does no
 
 - Pin pi at version 0.80.10. The spike verifies the exact revision associated with that version.
 
-- Bun supports cross-compiling Windows x64 executables from macOS ([E17](./evidence-ledger.md#e17)). The milestone-3 acceptance artifact is a portable, extractable zip containing `pi.exe`, required sidecars, launcher, extension, skill, and `THIRD_PARTY_NOTICES`. A supervised pilot does not justify installer or administrator complexity; if Roads deployment requires managed installation, that becomes an explicit rollout requirement.
+- Bun supports cross-compiling Windows x64 executables from macOS ([E17](./evidence-ledger.md#e17)). The milestone-3 acceptance artifact is a portable, extractable zip containing `pi.exe`, required sidecars, launcher, extension, skill, and `THIRD_PARTY_NOTICES`. A supervised pilot does not justify installer or administrator complexity; if the Organization's deployment requires managed installation, that becomes an explicit rollout requirement.
 
-- Compiled pi loaded the TypeScript mechanism extension in the macOS spike ([E20](./evidence-ledger.md#e20)); Windows loading remains milestone-3 acceptance. Bundle Windows `rg.exe`/`fd.exe`. Test the Roads Windows machines for AVX2, a CPU instruction set used by Bun's faster executable target; if any machines lack it, ship Bun's more broadly compatible baseline target ([E17](./evidence-ledger.md#e17)).
+- Compiled pi loaded the TypeScript mechanism extension in the macOS spike ([E20](./evidence-ledger.md#e20)); Windows loading remains milestone-3 acceptance. Bundle Windows `rg.exe`/`fd.exe`. Test the Organization Windows machines for AVX2, a CPU instruction set used by Bun's faster executable target; if any machines lack it, ship Bun's more broadly compatible baseline target ([E17](./evidence-ledger.md#e17)).
 
 - Code signing and managed distribution remain rollout decisions. Azure Artifact Signing is Microsoft's managed service for signing Windows executables so Windows can verify the publisher and file integrity ([E19](./evidence-ledger.md#e19)). Eligibility and identity validation must be rechecked then ([§6](#6-decision-status--open-work)).
 
@@ -502,7 +502,7 @@ All factual references resolve through the [claim-level evidence ledger](./evide
 
 - `attempt-evidence.md` - attempt-event definition + transcripts
 
-- `diagnosis-probe.md` - model screen + Roads validation design
+- `diagnosis-probe.md` - model screen + Organization validation design
 
 - `stakeholder-questions.md` - decision ledger
 
