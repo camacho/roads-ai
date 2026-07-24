@@ -1,6 +1,6 @@
-# Roads AI
+# Trestle
 
-Roads AI is a local-first scaffold for an educational programming system built from:
+Trestle is a local-first scaffold for an educational programming system built from:
 
 - an open-source model hosted behind a local server
 - an open-source harness installed on a local device
@@ -12,8 +12,8 @@ The current scaffold keeps the package behavior intentionally small. Both worksp
 
 <!-- AUTO-GENERATED-CONTENT:START (SUBPACKAGELIST:verbose=true) -->
 
-- [@roads-ai/harness](packages/harness) - Roads AI harness executable scaffold
-- [@roads-ai/model](packages/model) - Roads AI model executable scaffold
+- [@trestle/harness](packages/harness) - Trestle harness executable scaffold
+- [@trestle/model](packages/model) - Trestle model executable scaffold
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
