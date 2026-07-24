@@ -239,7 +239,7 @@
   .routediagram .rd-nodes rect { fill: #131315; stroke: #7c7b74; stroke-width: 1.5; }
   .routediagram .rd-nodes text { fill: #ecebe4; font-size: 14px; }
   .routediagram .rd-nodes .rd-sub { fill: #bdbcb3; font-size: 11.5px; }
-  .routediagram .rd-edgelabels text { font-size: 11.5px; paint-order: stroke; stroke: #0a0a0b; stroke-width: 6px; stroke-linejoin: round; }
+  .routediagram .rd-edgelabels text { font-size: 11.5px; fill: #bdbcb3; paint-order: stroke; stroke: #0a0a0b; stroke-width: 6px; stroke-linejoin: round; }
   .routediagram .rd-nodes g.ending rect { fill: #e8c96a; stroke: #b8a24e; }
   .routediagram .rd-nodes g.ending text { fill: #0a0a0b; font-weight: 600; }
   .routediagram .rd-nodes g.ending .rd-sub { fill: #2b2b28; }
@@ -281,7 +281,7 @@
 
 <section class="slide" id="s-intro">
   <div class="inner">
-    <div class="eyebrow"><span>Trestle · full review deck</span><span class="n">build 2026-07-23</span></div>
+    <div class="eyebrow"><span>Trestle · full review deck</span><span class="n">build 2026-07-24</span></div>
     <h1>Review the coupled RFCs, chunk by chunk</h1>
     <p class="lede">Every RFC 001 section and RFC 002 as slides, in six chunks. Each chunk ends in a gate: <b>Approve</b> or <b>Request changes</b>. A chunk verdict is a verdict on exactly the named sections at this build's content digest — if the RFC text changes later, this deck's approvals go stale visibly.</p>
     <ul class="sum">
@@ -289,7 +289,7 @@
       <li><b>"Read the RFC text"</b> on each slide expands the verbatim markdown — the slides summarize; the expandable text is what you're approving.</li>
       <li><b>Export</b> from the Review drawer (bottom-left) — the copied or saved feedback is the review of record, not this page.</li>
     </ul>
-    <p class="muted" style="font-size:0.8rem; font-family:var(--mono)">Build 2026-07-23 · RFC 001 sha256:5bdecde004df838f… · RFC 002 sha256:da8ad4fc62445eca…</p>
+    <p class="muted" style="font-size:0.8rem; font-family:var(--mono)">Build 2026-07-24 · RFC 001 sha256:5bdecde004df838f… · RFC 002 sha256:da8ad4fc62445eca…</p>
   </div>
 </section>
 
@@ -439,33 +439,33 @@ flowchart LR
       <button type="button" data-mode="CLARIFY" data-v='{"mode":"CLARIFY","attempt_event":false,"new_problem":false}'>"it doesn't work"</button>
     </div>
     <div class="routediagram" id="routediagram">
-      <svg viewBox="0 0 1160 340" role="img" aria-label="Routing flow: learner message to classifier to DIRECT, LADDER, or CLARIFY">
+      <svg viewBox="0 0 1200 340" role="img" aria-label="Routing flow: learner message to classifier to DIRECT, LADDER, or CLARIFY">
         <defs><marker id="arrw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker></defs>
         <g class="rd-edges" fill="none" stroke="#a5a49b" stroke-width="1.5">
           <path data-routes="DIRECT LADDER CLARIFY" d="M 180 170 L 240 170" marker-end="url(#arrw)"/>
-          <path data-routes="DIRECT" d="M 440 140 C 480 90, 490 65, 520 60" marker-end="url(#arrw)"/>
-          <path data-routes="LADDER" d="M 440 170 L 520 170" marker-end="url(#arrw)"/>
-          <path data-routes="CLARIFY" d="M 440 200 C 480 250, 490 275, 520 280" marker-end="url(#arrw)"/>
-          <path data-routes="LADDER" d="M 690 170 L 760 170" marker-end="url(#arrw)"/>
-          <path data-routes="" d="M 930 150 C 950 120, 955 110, 970 105" marker-end="url(#arrw)"/>
-          <path data-routes="LADDER" d="M 930 190 C 950 220, 955 230, 970 235" marker-end="url(#arrw)"/>
+          <path data-routes="DIRECT" d="M 440 145 C 495 95, 515 70, 560 62" marker-end="url(#arrw)"/>
+          <path data-routes="LADDER" d="M 440 170 L 560 170" marker-end="url(#arrw)"/>
+          <path data-routes="CLARIFY" d="M 440 195 C 495 245, 515 270, 560 278" marker-end="url(#arrw)"/>
+          <path data-routes="LADDER" d="M 730 170 L 800 170" marker-end="url(#arrw)"/>
+          <path data-routes="" d="M 970 150 C 990 122, 995 112, 1010 106" marker-end="url(#arrw)"/>
+          <path data-routes="LADDER" d="M 970 190 C 990 218, 995 228, 1010 234" marker-end="url(#arrw)"/>
         </g>
-        <g class="rd-edgelabels" font-size="13" fill="#94938a">
-          <text data-routes="DIRECT" x="452" y="92">incidental friction</text>
-          <text data-routes="LADDER" x="448" y="160">conceptual + real attempt</text>
-          <text data-routes="CLARIFY" x="466" y="252">too vague</text>
-          <text data-routes="" x="938" y="118">yes</text>
-          <text data-routes="LADDER" x="940" y="228">no</text>
+        <g class="rd-edgelabels" text-anchor="middle">
+          <text data-routes="DIRECT" x="500" y="88">incidental friction</text>
+          <text data-routes="LADDER" x="500" y="192">conceptual + attempt</text>
+          <text data-routes="CLARIFY" x="500" y="258">needs context</text>
+          <text data-routes="" x="984" y="116">yes</text>
+          <text data-routes="LADDER" x="984" y="230">no</text>
         </g>
-        <g class="rd-nodes" font-size="15">
+        <g class="rd-nodes">
           <g data-routes="DIRECT LADDER CLARIFY"><rect x="20" y="140" width="160" height="60"/><text x="100" y="175" text-anchor="middle">Learner message</text></g>
           <g data-routes="DIRECT LADDER CLARIFY"><rect x="240" y="130" width="200" height="80"/><text x="340" y="163" text-anchor="middle">Hidden classifier</text><text x="340" y="185" text-anchor="middle" class="rd-sub">schema-validated verdict</text></g>
-          <g class="ending" data-routes="DIRECT"><rect x="520" y="30" width="170" height="60"/><text x="605" y="55" text-anchor="middle">DIRECT</text><text x="605" y="76" text-anchor="middle" class="rd-sub">just answer</text></g>
-          <g data-routes="LADDER"><rect x="520" y="140" width="170" height="60"/><text x="605" y="165" text-anchor="middle">LADDER</text><text x="605" y="186" text-anchor="middle" class="rd-sub">guide, count the attempt</text></g>
-          <g class="ending" data-routes="CLARIFY"><rect x="520" y="250" width="170" height="60"/><text x="605" y="275" text-anchor="middle">CLARIFY</text><text x="605" y="296" text-anchor="middle" class="rd-sub">one question back</text></g>
-          <g data-routes="LADDER"><rect x="760" y="140" width="170" height="60"/><text x="845" y="175" text-anchor="middle">attempt_count = 2?</text></g>
-          <g data-routes=""><rect x="970" y="72" width="180" height="64"/><text x="1060" y="98" text-anchor="middle">Full reveal</text><text x="1060" y="119" text-anchor="middle" class="rd-sub">+ optional explain-back</text></g>
-          <g class="ending" data-routes="LADDER"><rect x="970" y="208" width="180" height="56"/><text x="1060" y="232" text-anchor="middle">Stronger guidance</text><text x="1060" y="252" text-anchor="middle" class="rd-sub">attempt counted</text></g>
+          <g class="ending" data-routes="DIRECT"><rect x="560" y="32" width="170" height="60"/><text x="645" y="57" text-anchor="middle">DIRECT</text><text x="645" y="78" text-anchor="middle" class="rd-sub">just answer</text></g>
+          <g data-routes="LADDER"><rect x="560" y="140" width="170" height="60"/><text x="645" y="165" text-anchor="middle">LADDER</text><text x="645" y="186" text-anchor="middle" class="rd-sub">guide, count the attempt</text></g>
+          <g class="ending" data-routes="CLARIFY"><rect x="560" y="248" width="170" height="60"/><text x="645" y="273" text-anchor="middle">CLARIFY</text><text x="645" y="294" text-anchor="middle" class="rd-sub">one question back</text></g>
+          <g data-routes="LADDER"><rect x="800" y="140" width="170" height="60"/><text x="885" y="175" text-anchor="middle">attempt_count = 2?</text></g>
+          <g data-routes=""><rect x="1010" y="74" width="180" height="64"/><text x="1100" y="100" text-anchor="middle">Full reveal</text><text x="1100" y="121" text-anchor="middle" class="rd-sub">+ optional explain-back</text></g>
+          <g class="ending" data-routes="LADDER"><rect x="1010" y="206" width="180" height="56"/><text x="1100" y="230" text-anchor="middle">Stronger guidance</text><text x="1100" y="250" text-anchor="middle" class="rd-sub">attempt counted</text></g>
         </g>
       </svg>
     </div>
@@ -745,7 +745,7 @@ flowchart LR
     <ul class="sum">
       <li>The shared ledger holds <b>33 claims</b>, each with an exact source locator and stated limits. Three tiers: E01–E28 blind-reviewed by three independent reviewers (changed six claims), E29 artifact-reviewed, E30–E33 closure-reviewed.</li>
       <li><b>Companions:</b> evaluation design, stakeholder decision sheet, attempt-evidence transcripts, probe directory, two spikes with raw logs and checksums.</li>
-      <li><b>One row stays open on purpose:</b> E25 remains qualified until a commit whose agreed scope explicitly includes the ignored spike logs, verified in the staged tree.</li>
+      <li><b>Every row now closed:</b> E25's condition was met when draft PR #4 staged the spike evidence logs (24 files verified in the staged tree).</li>
     </ul>
     <details class="rfc" data-sec="A19"><summary>Read the RFC text (§19 + companions)</summary><div class="rfc-src"></div></details>
   </div>
@@ -916,7 +916,7 @@ flowchart LR
       <li><b>Copy or save</b> your feedback from the panel to share it — with the team, or with a peer you've handed these slides to.</li>
       <li>Six approvals = the coupled set is approved. Any request-changes comes back to us with your comments attached.</li>
     </ul>
-    <div class="gate"><b>After approval,</b> one step remains: agreeing the exact joint commit scope. E25 closes only if the ignored spike logs are explicitly included and verified in the staged tree.</div>
+    <div class="gate"><b>Status:</b> draft PR #4 is open with the agreed scope committed — the spike evidence logs are staged and verified, closing the ledger's last open condition (E25). After your review here, the PR gets marked ready.</div>
   </div>
 </section>
 
@@ -1151,7 +1151,7 @@ flowchart LR
       if (allChecked) fullyCheckedSlides++;
     });
     const progressLine = "Read progress: " + fullyCheckedSlides + "/" + slidesWithCheckboxes + " slides fully checked";
-    return "TRESTLE RFC REVIEW — build 2026-07-23 · 001:5bdecde004df838f · 002:da8ad4fc62445eca\n" + progressLine + "\n\nCHUNK VERDICTS\n" + gs.join("\n") + "\n\nCOMMENTS\n" + (cs.join("\n\n") || "(none)");
+    return "TRESTLE RFC REVIEW — build 2026-07-24 · 001:5bdecde004df838f · 002:da8ad4fc62445eca\n" + progressLine + "\n\nCHUNK VERDICTS\n" + gs.join("\n") + "\n\nCOMMENTS\n" + (cs.join("\n\n") || "(none)");
   }
   const cexport = document.getElementById("cexport");
   function showExport() {
