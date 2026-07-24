@@ -18,7 +18,7 @@ Trestle keeps developers **unblocked when a senior engineer is unavailable** wit
 
 The MVP is a pinned open-source coding-agent CLI (pi), a fixed teaching prompt, one adapted community skill, a Roads-managed LAN vLLM inference server, and one bespoke runtime component: a thin extension that owns attempt state, pacing instructions, status, and capability guardrails. vLLM-Metal runs natively only for development on the MacBook; learners use the Ubuntu Trestle Model Server over the Roads LAN, running a pinned official vLLM OpenAI Docker image. Both serve the same OpenAI-compatible endpoint. Policy servers, output checking, and telemetry are deferred and require pilot evidence ([§12](#12-delivery-milestones-and-implementation-sequence)).
 
-**Terminology:** the model is the neural network that generates responses. Pi is the **harness**: it owns the conversation loop, tools, state, and interface. When pi connects the model to those tools, the running combination behaves as an **agent**; Trestle constrains that agent by configuring the harness.
+**Terminology:** in this RFC, **local-only** names the deployment boundary: model inference is Roads-hosted and no WAN model provider or tool path is configured at launch. It does not claim host-level network isolation; stock learner-triggered residuals are disclosed in §15. The model is the neural network that generates responses. Pi is the **harness**: it owns the conversation loop, tools, state, and interface. When pi connects the model to those tools, the running combination behaves as an **agent**; Trestle constrains that agent by configuring the harness.
 
 Two kinds of restriction, held at different strengths:
 
